@@ -6,4 +6,10 @@ create table Users(
   phone_number varchar(20)
 )
 
-
+create table Matches (
+    match_id serial primary key,
+    fixture varchar(100) not null,
+    tournament_category varchar(100) not null,
+    base_ticket_price numeric(10,2) not null check(base_ticket_price >= 0),
+    match_status varchar(20) not null check (match_status in ('Available', 'Selling Fast', 'Sold Out', 'Postponed'))
+);
