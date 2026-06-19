@@ -13,3 +13,27 @@ create table Matches (
     base_ticket_price numeric(10,2) not null check(base_ticket_price >= 0),
     match_status varchar(20) not null check (match_status in ('Available', 'Selling Fast', 'Sold Out', 'Postponed'))
 );
+
+create table Bookings (
+    booking_id serial primary key,
+    user_id int references users(user_id),
+    match_id int references matches(match_id),
+    seat_number varchar(20),
+    payment_status varchar(20) check (payment_status in ('Pending', 'Confirmed', 'Cancelled', 'Refunded')),
+    total_cost numeric(10,2) not null check(total_cost >= 0)
+);
+
+-- users table data insert
+INSERT INTO Users (user_id, full_name, email, role, phone_number) VALUES
+(1, 'Tanvir Rahman', 'tanvir@mail.com', 'Football Fan', '+8801711111111'),
+(2, 'Asif Haque', 'asif@mail.com', 'Football Fan', '+8801722222222'),
+(3, 'Sajjad Rahman', 'sajjad@mail.com', 'Ticket Manager', '+8801733333333'),
+(4, 'Jannat Ara', 'jannat@mail.com', 'Football Fan', NULL);
+
+-- matches table insert
+INSERT INTO Matches (match_id, fixture, tournament_category, base_ticket_price, match_status) VALUES
+(101, 'Real Madrid vs Barcelona', 'Champions League', 150.00, 'Available'),
+(102, 'Man City vs Liverpool', 'Premier League', 120.00, 'Selling Fast'),
+(103, 'Bayern Munich vs PSG', 'Champions League', 130.00, 'Available'),
+(104, 'AC Milan vs Inter Milan', 'Serie A', 90.00, 'Sold Out'),
+(105, 'Juventus vs Roma', 'Serie A', 80.00, 'Available');
